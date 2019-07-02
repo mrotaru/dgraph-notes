@@ -178,3 +178,25 @@ Date: Tue, 02 Jul 2019 06:00:40 GMT
     }
 }
 ```
+
+## Index
+
+To create and index:
+
+```sh
+http POST localhost:8080/alter <<<'
+name: string @index(term) .
+release_date: datetime @index(year) .
+revenue: float .
+running_time: int .
+'
+```
+
+- so in indices, we do use types, but data itself is not typed ? (`string`, `datetime`, etc) (❓)
+- need a reference for `@index`, info on `term` and `year` (❓)
+
+## Query
+
+```sh
+http POST localhost:8080/query <<< '{ me(func: has(starring)) { name } }'
+```
