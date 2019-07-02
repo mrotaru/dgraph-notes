@@ -6,21 +6,22 @@
 - Ratel - serves the UI to run queries, mutations & altering schema.
 
 ## Running
+
+Everything from the same container:
+
 ```sh
 mkdir -p /tmp/data
 docker run -it -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 -p 8000:8000 -v /tmp/data:/dgraph --name diggy dgraph/dgraph dgraph zero # zero
 # ❓ many ports; what does each of them do
-# 5080 - 
+# 5080 - Zero ❓
 # 6080 - 
-# 8080 -
-# 9080 -
-# 8000 - Ratel ? Isn't that a separate container ?
+# 8080 - Alpha
+# 9080 - Alpha
+# 8000 - Ratel
 docker exec -it diggy dgraph alpha --lru_mb 2048 --zero localhost:5080 # alpha
-docker exec -it diggy dgraph-ratel # ratel ?
+docker exec -it diggy dgraph-ratel # ratel
 ```
 Now can go to http://localhost:8000 and run queries on the local cluster.
-
-❓ Port 8000 is "published" by Zero, how come Ratel is on it ? If I kill the Ratel container, it stops working.
 
 ## Seeding
 
