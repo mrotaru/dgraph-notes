@@ -27,7 +27,7 @@ Now can go to http://localhost:8000 and run queries on the local cluster.
 
 ### Data Format
 
-Below is the data in the examples; I dumped it into `movies-data`. Looks weird. It's silly that there is no info at all about this format on the quick-start page, or any links. (❓: data syntax reference) 
+Below is the RDF data in the example; I dumped it into `movies-data`:
 
 ```
 {
@@ -75,7 +75,8 @@ Below is the data in the examples; I dumped it into `movies-data`. Looks weird. 
 ```
 
 #### Notes on Data Above
-
+- reference: https://docs.dgraph.io/mutations/
+- RDF spec: https://www.w3.org/TR/turtle/#BNodes
 - `_:<foo>`: `foo` is the node name; node is referenced with `.`
 - not sure if newlines are significant or just for formatting
 - so, first "block" creates 6 nodes, each having a `name` attribute
@@ -87,10 +88,13 @@ Below is the data in the examples; I dumped it into `movies-data`. Looks weird. 
 
 ### Insert Data
 
-We can insert the data using `httpie`:
+We can insert the data using `httpie`. Do not forget the `X-Dgraph-CommitNow`
+header, because if you do, the transaction will not be "committed"; `dgraph`
+will give you a `200` back, but when you'll run the query, there will be no
+results.
 
 ```
-http POST localhost:8080/mutate < movies-data
+http POST localhost:8080/mutate X-Dgraph-CommitNow:true < movies-data
 ```
 
 Response:
@@ -192,9 +196,7 @@ revenue: float .
 running_time: int .
 '
 ```
-
-- so in indices, we do use types, but data itself is not typed ? (`string`, `datetime`, etc) (❓)
-- need a reference for `@index`, info on `term` and `year` (❓)
+- Reference: https://docs.dgraph.io/query-language/#indexing
 
 ## Query
 
